@@ -14,7 +14,7 @@
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t valaxy/nodeapp:$BUILD_NUMBER .'
+                sh 'docker build -t rajatroy/my_website:$BUILD_NUMBER .'
             }
         }
         stage('login to dockerhub') {
@@ -24,7 +24,7 @@
         }
         stage('push image') {
             steps{
-                sh 'docker push valaxy/nodeapp:$BUILD_NUMBER'
+                sh 'docker push rajatroy/my_website:$BUILD_NUMBER'
             }
         }
 }
