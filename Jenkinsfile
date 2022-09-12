@@ -1,7 +1,7 @@
 # Jenkns File for buildding docker image and pushing it to Docker Hub / Artifactory . 
   
   pipeline {
-    agent any 
+    agent Built-In Node 
     environment {
     DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds')
     }
