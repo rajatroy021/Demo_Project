@@ -1,18 +1,23 @@
-name: Docker Build & Publish
+name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "master" ]
 
-steps:
-  - uses: actions/checkout@v2
-    name: Check out code
+jobs:
 
-  - uses: mr-smithers-excellent/docker-build-push@v5
-    name: Build & push Docker image
-    with:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+  
+
+    - uses: mr-smithers-excellent/docker-build-push@v5
+      name: Build & push Docker image
+      with:
       image: rajatroy/demo
       registry: docker.io/
       username: ${{ secrets.DOCKER_USERNAME }}
