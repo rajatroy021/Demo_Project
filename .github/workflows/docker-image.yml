@@ -1,28 +1,30 @@
-
 name: Docker Image CI
 
 on:
   push:
-    branches: [ "master-1" ]
+    branches: [ "master-1" ]  # Trigger on push events to master-1 branch
   pull_request:
-    branches: [ "master-1" ]
+    branches: [ "master-1" ]  # Trigger on pull requests targeting master-1 branch
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag demo-app:$(date +%s)
-  
+      - uses: actions/checkout@v4  # Update to v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Build with full image name and tag
 
-    - uses: mr-smithers-excellent/docker-build-push@v5
-      name: Build & push Docker image
-      with:
-        image: rajatroy/demo
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push the Docker image (optional)  # Consider adding a condition
+        uses: docker/build-push-action@v3  # Use reliable action
+        with:
+          push: ${{ github.event.type == 'push' }}  # Push only on push events
+          tags: ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Specify full image name and tag
+          cache: pull  # Optionally enable cache
+
+      - name: Install Docker credential helper
+        run: |
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          sudo apt-get update
+          sudo apt-get install docker-credential-gcr
