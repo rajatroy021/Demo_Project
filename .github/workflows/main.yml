@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master" ]  # Adjust this branch as needed
+    branches: [ "master-1" ]  # Adjust this branch as needed
   pull_request:
-    branches: [ "master" ]  # Adjust this branch as needed
+    branches: [ "master-1" ]  # Adjust this branch as needed
 
 jobs:
   build:
