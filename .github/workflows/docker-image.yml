@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master" ]  # Trigger only on push events
+    branches: [ "master-1-1" ]  # Trigger only on push events
 
 jobs:
   build:
