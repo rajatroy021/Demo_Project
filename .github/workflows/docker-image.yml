@@ -2,26 +2,23 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master-1-1" ]
-  pull_request:
-    branches: [ "master-1-1" ]
+    branches: [ "master-1-1" ]  # Trigger only on push events
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag demo-app:$(date +%s)
-  
+      - uses: actions/checkout@v4  # Update to v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag demo-app:${{ github.sha }}  # Use github.sha for tag
 
-    - uses: mr-smithers-excellent/docker-build-push@v5
-      name: Build & push Docker image
-      with:
-        image: rajatroy/demo
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/build-push-action@v3  # Use reliable action
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Specify full image name
+          cache: pull  # Optionally enable cache
+
+      - name: Login to Docker Hub (optional)  # If build-push-action doesn't handle login
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
