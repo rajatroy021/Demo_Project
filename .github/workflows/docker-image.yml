@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master-1-1" ]  # Trigger only on push events
+    branches: [ "master" ]  # Trigger only on push events
 
 jobs:
   build:
@@ -11,14 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4  # Update to v4
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag demo-app:${{ github.sha }}  # Use github.sha for tag
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Build with full image name and tag
 
-      - uses: docker/build-push-action@v3  # Use reliable action
+      - name: Push the Docker image
+        uses: docker/build-push-action@v3  # Use reliable action
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Specify full image name
+          tags: ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Specify full image name and tag
           cache: pull  # Optionally enable cache
 
-      - name: Login to Docker Hub (optional)  # If build-push-action doesn't handle login
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
+      - name: Configure Docker credential helper (optional)  # Address security warning
+        run: |
+          docker-credential-gcr configure-docker
+      
