@@ -22,8 +22,11 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/rajatroy/demo:${{ github.sha }}  # Specify full image name and tag
           cache: pull  # Optionally enable cache
 
-      - name: Configure Docker credential helper (optional)  # Address security warning
+      - name: Install Docker credential helper
         run: |
-          docker-credential-gcr configure-docker  # Replace gcr with your registry if needed
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          sudo apt-get update
+          sudo apt-get install docker-credential-gcr
 
 
