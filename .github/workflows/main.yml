@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: argo-cd-deployment
+spec:
+  entrypoint: deploy
+  templates:
+    - name: deploy
+      steps:
+      - name: checkout-code
+        gitResource:
+          repo: https://github.com/rajatroy021/Demo_Project.git
+          branch: main
+      - name: build-image
+        container:
+          image: your-build-image
+          command: ["./build.sh"]
+          args: ["-t", "test-image:latest"]
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+      - name: apply-changes
+        argoCD:
+          syncSource:
+            repoURL: https://hub.docker.com/repository/docker/rajatroy/demo/general
+            repoName: rajatroy/demo
+            path: "rajatroy/demo"
+            cluster: "test-cluster"
+          applicationSource:
+            repoURL: ip-172-31-24-175
+            repoName: web-app
+            path: "root/webchart/"
