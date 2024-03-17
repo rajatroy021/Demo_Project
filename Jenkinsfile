@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Building Image on the fly !!!!') {
             steps {
-                sh 'node --version'
-                sh 'svn --version'
+                sh 'docker --version'
+                sh 'java --version'
             }
         }
     }
