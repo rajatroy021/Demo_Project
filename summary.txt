@@ -1,0 +1,11 @@
+**Summary of Fog Computing:**
+
+Fog computing enables localized processing and analysis of data, facilitating applications in sectors like healthcare, where forecasts suggest a market increase to $5.4 billion by 2017. It also supports wireless sensor networks needing actuator functionalities, offering a new paradigm that dramatically alters IT practices across services and data privacy.
+
+Key areas of impact include:
+1. Visualization and real-time analytics with global coverage supported by cloud technology.
+2. Health care forecasting in the wake of growing demand for localized processing.
+3. Integration of various technologies to meet the new requirements driven by device ubiquity and agile management.
+4. Security discussions surrounding common attacks within fog computing environments.
+
+This overview presents a comprehensive insight into how fog computing converges various technologies, heralding a shift in the IT landscape.
