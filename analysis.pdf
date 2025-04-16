@@ -1,8 +1,0 @@
-This PDF contains visual representations of running resources categorized by service type. The x-axis denotes the types of services, while the y-axis displays the associated costs. For each service, there are two columns: 'Current Cost' and 'Reduced Cost', highlighting potential savings based on previous analysis.
-
-- Current Cost: The amount currently being spent on each service.
-- Reduced Cost: The estimated cost after optimization strategies have been applied.
-
-Graphs included:
-1. Bar graph comparing Current and Reduced Costs for each service type.
-2. Histogram illustrating the distribution of costs across different services.
